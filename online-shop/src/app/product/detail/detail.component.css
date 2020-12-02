@@ -1,0 +1,40 @@
+.details {
+    background-color: white;
+    padding: 20px;
+    margin-top: 20px;
+    margin-right: 0px;
+}
+
+.details button {
+    margin-left: 90%;
+}
+
+button {
+    background-color: #333;
+    color: white;
+    /* padding: 20px 50px; */
+    /* margin-left: 90%; */
+    opacity: 0.9;
+    border: 2px solid;
+    border-radius: 5px;
+    font-size: 100%;
+}
+
+.comment {
+    background-color: white;
+    padding: 20px;
+    margin-top: 20px;
+    margin-right: 0px;
+}
+
+.comment span {
+    margin-left: 90%;
+}
+
+.deletebtn {
+    background-color: red;
+}
+
+.likebtn {
+    background-color: green;
+}

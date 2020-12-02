@@ -1,0 +1,15 @@
+.deatilbtn {
+    background-color: #333;
+    color: white;
+    padding: 20px 50px;
+    margin-left: 90%;
+    opacity: 0.9;
+    border: 2px solid;
+    border-radius: 5px;
+    font-size: 100%;
+    text-decoration: none;
+}
+
+.deatilbtn:hover {
+    opacity: 1;
+}

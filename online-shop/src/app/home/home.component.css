@@ -1,0 +1,54 @@
+.rightcolumn {
+    float: left;
+    width: 25%;
+    background-color: #f1f1f1;
+    padding-right: 100px;
+}
+
+.card {
+    background-color: white;
+    padding: 20px;
+    margin-top: 20px;
+    margin-right: 22px;
+    width: 135%;
+}
+
+.buttons {
+    background-color: white;
+    padding: 20px;
+}
+
+.row {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+a {
+    float: left;
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 10px 10px;
+    /* padding-bottom: 5px; */
+    text-decoration: none;
+}
+
+a:hover {
+    background-color: #333;
+    color: white;
+}
+
+
+/* .leftcolumn {
+    float: left;
+    width: 75%;
+} */
+
+@media screen and (max-width: 800px) {
+    .leftcolumn,
+    .rightcolumn {
+        width: 100%;
+        padding: 0;
+    }
+}

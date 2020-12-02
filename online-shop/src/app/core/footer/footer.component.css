@@ -1,0 +1,14 @@
+footer {
+    bottom: 0;
+    padding: 20px;
+    text-align: center;
+    background: #ddd;
+    margin-top: 20px;
+}
+
+footer p {
+    margin: 0;
+    padding: 0;
+    font-size: 15px;
+    font-family: 'Parisienne', monospace;
+}

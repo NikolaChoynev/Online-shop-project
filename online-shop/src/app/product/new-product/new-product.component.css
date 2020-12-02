@@ -1,0 +1,85 @@
+.sellForm {
+    padding: 20px;
+    background-color: white;
+    margin-top: 20px;
+    margin-right: 30%;
+    margin-left: 30%;
+    width: 40%;
+    /* margin: 0 auto; */
+}
+
+.sellbtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+    border: 2px solid;
+    border-radius: 5px;
+}
+
+.sellbtn:hover {
+    opacity: 1;
+}
+
+.cancelbtn {
+    background-color: grey;
+    color: black;
+    padding: 16px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+    border: 2px solid;
+    border-radius: 5px;
+}
+
+.cancelbtn:hover {
+    opacity: 1;
+}
+
+hr {
+    border: 1px solid #f1f1f1;
+    margin-bottom: 25px;
+}
+
+input {
+    border: 2px solid black;
+    border-radius: 5px;
+    width: 100%;
+    padding: 15px;
+    display: inline-block;
+    background: #f1f1f1;
+}
+
+input:focus {
+    background-color: #ddd;
+    outline: none;
+}
+
+textarea {
+    border: 2px solid black;
+    border-radius: 5px;
+    width: 100%;
+    padding: 15px;
+    display: inline-block;
+    background: #f1f1f1;
+}
+
+textarea:focus {
+    background-color: #ddd;
+    outline: none;
+}
+
+.selldiv {
+    background-color: white;
+    width: 100%;
+}
+
+.selldiv label {
+    margin: 10px 0px;
+}

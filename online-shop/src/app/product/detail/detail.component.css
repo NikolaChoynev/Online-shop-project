@@ -10,11 +10,11 @@
 }
 
 button {
-    background-color: #333;
+    /* background-color: #333; */
     color: white;
     /* padding: 20px 50px; */
     /* margin-left: 90%; */
-    opacity: 0.9;
+    opacity: 0.8;
     border: 2px solid;
     border-radius: 5px;
     font-size: 100%;
@@ -37,4 +37,19 @@ button {
 
 .likebtn {
     background-color: green;
+}
+
+.postbtn {
+    background-color: green;
+}
+
+.editbtn {
+    background-color: #333;
+}
+
+.deletebtn:hover,
+.likebtn:hover,
+.postbtn:hover,
+.editbtn:hover {
+    opacity: 1;
 }

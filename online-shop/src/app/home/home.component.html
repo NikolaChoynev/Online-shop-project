@@ -3,12 +3,13 @@
         <div class="card">
             <h3>Welcome!</h3>
             <p>This store is a place where you can buy or sell anything you want. If you want to sell a product or buy one, you need to login or register on the site.</p>
-            <div class="buttons">
+            <div *ngIf="!isLogged" class="buttons">
                 <a routerLink="/user/register">Register</a>
                 <a routerLink="/user/login">Login</a>
             </div>
         </div>
-        <div class="card">
+        <h3 *ngIf="isLogged">Available products</h3>
+        <div *ngIf="isLogged" class="card">
             <app-product-item></app-product-item>
         </div>
     </div>

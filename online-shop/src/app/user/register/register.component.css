@@ -30,8 +30,11 @@ hr {
     margin-bottom: 25px;
 }
 
-input {
+input:not(.input-error) {
     border: 2px solid black;
+}
+
+input {
     border-radius: 5px;
     width: 100%;
     padding: 15px;
@@ -42,6 +45,17 @@ input {
 input:focus {
     background-color: #ddd;
     outline: none;
+}
+
+p.error {
+    text-align: left;
+    border-radius: 0.3em;
+    color: red;
+    padding-top: 0;
+}
+
+.input-error {
+    border: 2px solid red;
 }
 
 .registerdiv {

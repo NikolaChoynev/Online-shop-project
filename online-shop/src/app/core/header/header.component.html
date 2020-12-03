@@ -5,9 +5,9 @@
 
 <div class="nav">
     <a routerLink="/home">Home</a>
-    <a routerLink="/product/new">Sell</a>
-    <a routerLink="user/register" style="float:right">Register</a>
-    <a routerLink="user/login" style="float:right">Login</a>
-    <a href="#" style="float:right">Logout</a>
-    <a href="#" style="float:right">Gosho's profile</a>
+    <a *ngIf="isLogged" routerLink="/product/new">Sell</a>
+    <a *ngIf="!isLogged" routerLink="user/register" style="float:right">Register</a>
+    <a *ngIf="!isLogged" routerLink="user/login" style="float:right">Login</a>
+    <a *ngIf="isLogged" style="float:right" (click)="logoutHandler()">Logout</a>
+    <a *ngIf="isLogged" routerLink="user/profile" style="float:right">{{currentUser.username}}'s profile</a>
 </div>

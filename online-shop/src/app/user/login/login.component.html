@@ -1,17 +1,31 @@
-<form>
+<form #f="ngForm" (ngSubmit)="submitFormHandler(f.value)">
     <div class="loginForm">
         <h2>Login Form</h2>
         <hr>
         <div class="logindiv">
             <label for="email"><b>Email</b></label>
-            <input type="text" placeholder="Enter your email" name="email" id="email">
+            <input #userEmail="ngModel" [class.input-error]="userEmail.touched && !!userEmail.errors || errorMessage" type="email" placeholder="Enter your email" name="email" id="email" ngModel required email>
+            <p *ngIf="userEmail.touched && userEmail.errors?.required" class="error">
+                Email is required!
+            </p>
+            <p *ngIf="userEmail.touched && userEmail.errors?.email" class="error">
+                Email is not valid!
+            </p>
             <hr>
 
             <label for="password"><b>Password</b></label>
-            <input type="password" placeholder="password" name="password" id="password" required>
+            <input #userPassword="ngModel" [class.input-error]="userPassword.touched && !!userPassword.errors || errorMessage" type="password" placeholder="Enter your passowrd" name="password" id="password" ngModel required minlength="5">
+            <p *ngIf="userPassword.touched && userPassword.errors?.required" class="error">
+                Password is required!
+            </p>
+            <p *ngIf="userPassword.touched && userPassword.errors?.minlength " class="error">
+                Password must be at least 5 characters!
+            </p>
             <hr>
 
-            <button type="submit" class="loginbtn">Log in</button>
+            <button [disabled]="isLoading || f.invalid || errorMessage" class="loginbtn">Log in</button>
+            <p *ngIf="errorMessage" class="error">{{errorMessage}}</p>
+            <app-loader [isLoading]="isLoading"></app-loader>
         </div>
 
         <div class="container signin">

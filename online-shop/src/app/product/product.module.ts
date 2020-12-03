@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { ProductRouterModule } from './product-routin.module';
 import { ProductItemComponent } from './product-item/product-item.component';
 import { DetailComponent } from './detail/detail.component';
+import { UserModule } from '../user/user.module';
 
 
 

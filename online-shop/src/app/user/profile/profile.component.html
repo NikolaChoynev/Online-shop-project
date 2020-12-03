@@ -1,0 +1,60 @@
+<div class="row">
+    <div class="leftcolumn">
+        <h3>Your Salles</h3>
+        <div class="card">
+            <h2>TITLE HEADING</h2>
+            <h5>Title description, Sep 2, 2017</h5>
+            <div class="fakeimg" style="height:200px;">Image</div>
+            <p>Price</p>
+            <a [routerLink]="['/product/detail', 1]">Details</a>
+        </div>
+    </div>
+    <div class="rightcolumn">
+        <h3>About Gosho </h3>
+        <div class="card">
+            <h2>Gosho's Cart</h2>
+            <div style="height:100px;">
+                <p>Name of the product</p>
+                <p>price</p>
+                <a [routerLink]="['/product/detail', 1]">Details</a>
+            </div>
+            <div style="height:100px;">
+                <p>Name of the product</p>
+                <p>price</p>
+                <a [routerLink]="['/product/detail', 1]">Details</a>
+            </div>
+            <p>Debt price: </p>
+        </div>
+        <div class="card-form">
+            <h3>Profile</h3>
+            <form>
+                <div *ngIf="inEditMode" class="editProfile">
+                    <label for="email"><b>Email</b></label>
+                    <input type="text" placeholder="Enter your email" name="email" id="email">
+
+                    <label for="username"><b>Username</b></label>
+                    <input type="text" placeholder="Enter your username" name="username" id="username">
+
+                    <label for="address"><b>Address</b></label>
+                    <input type="text" placeholder="Enter your address" name="email" id="email">
+
+                    <button class="savebtn">Save</button>
+                    <button class="cancelbtn" (click)="toggleEditMode()">Cancel</button>
+
+
+                </div>
+            </form>
+            <div *ngIf="!inEditMode" class="profile">
+                <p><b>Email:</b></p>
+                <p>gosho@gmail.com</p>
+
+                <p><b>Username:</b></p>
+                <p>Gosho</p>
+
+                <p><b>Address:</b></p>
+                <p>Plovdiv</p>
+                <button class="editbtn" (click)="toggleEditMode()">Edit</button>
+            </div>
+        </div>
+    </div>
+</div>

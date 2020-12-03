@@ -1,28 +1,57 @@
-<form>
+<form [formGroup]="form" (ngSubmit)="submitFormHandler()">
     <div class="registerForm">
         <h2>Register Form</h2>
         <hr>
         <div class="registerdiv">
             <label for="email"><b>Email</b></label>
-            <input type="text" placeholder="Enter your email" name="email" id="email">
+            <input [class.input-error]="form.get('email').touched && form.get('email').errors || errorMessage" type="text" placeholder="Enter your email" name="email" id="email" formControlName="email">
+            <p *ngIf="form.get('email').touched && form.get('email').errors?.required" class="error">
+                Email is required!
+            </p>
+            <p *ngIf="form.get('email').touched && form.get('email').errors?.email" class="error">
+                Email is not valid!
+            </p>
             <hr>
 
-            <label for="email"><b>Address</b></label>
-            <input type="text" placeholder="Enter your address" name="email" id="email">
+            <label for="address"><b>Address</b></label>
+            <input [class.input-error]="form.get('address').touched && form.get('address').errors" type="text" placeholder="Enter your address" name="address" id="address" formControlName="address">
+            <p *ngIf="form.get('address').touched && form.get('address').errors?.required" class="error">
+                Address is required!
+            </p>
             <hr>
 
             <label for="username"><b>Username</b></label>
-            <input type="text" placeholder="Enter your username" name="username" id="username">
+            <input [class.input-error]="form.get('username').touched && form.get('username').errors" type="text" placeholder="Enter your username" name="username" id="username" formControlName="username">
+            <p *ngIf="form.get('username').touched && form.get('username').errors?.required" class="error">
+                Username is required!
+            </p>
+            <p *ngIf="form.get('username').touched && form.get('username').errors?.minlength" class="error" class="error">
+                Username must be at least 3 characters!
+            </p>
             <hr>
 
             <label for="password"><b>Password</b></label>
-            <input type="password" placeholder="password" name="password" id="password" required>
+            <input [class.input-error]="form.get('password').touched && form.get('password').errors" type="password" placeholder="Enter your password" name="password" id="password" formControlName="password">
+            <p *ngIf="form.get('password').touched && form.get('password').errors?.required" class="error">
+                Password is required!
+            </p>
+            <p *ngIf="form.get('password').touched && form.get('password').errors?.minlength" class="error">
+                Password must be at least 5 characters!
+            </p>
             <hr>
 
             <label for="re-password"><b>Repeat Password</b></label>
-            <input type="password" placeholder="re-password" name="re-password" id="re-password" required>
+            <input [class.input-error]="form.get('rePassword').touched && form.get('rePassword').errors" type="password" placeholder="Repeat your password" name="re-password" id="re-password" formControlName="rePassword">
+            <p *ngIf="form.get('rePassword').touched && form.get('rePassword').errors?.required" class="error">
+                You have to repeat your password!
+            </p>
+            <p *ngIf="form.get('rePassword').touched && form.get('rePassword').errors?.rePasswordValidator" class="error">
+                Repeat Password does not match password!
+            </p>
             <hr>
-            <button class="registerbtn" type="submit">Register</button>
+            <button [disabled]="isLoading || form.invalid || errorMessage" class="registerbtn">Register</button>
+            <p *ngIf="errorMessage" class="error">{{errorMessage}}</p>
+            <app-loader [isLoading]="isLoading"></app-loader>
         </div>
 
         <div class="container signin">

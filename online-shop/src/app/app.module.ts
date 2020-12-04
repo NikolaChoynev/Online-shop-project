@@ -11,6 +11,7 @@ import { CoreModule } from './core/core.module';
 import { HomeComponent } from './home/home.component';
 import { UserModule } from './user/user.module';
 import { ProductModule } from './product/product.module';
+import { ProductService } from './product/product.service';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,9 @@ import { ProductModule } from './product/product.module';
     UserModule,
     ProductModule,
   ],
-  providers: [],
+  providers: [
+    ProductService
+  ],
   bootstrap: [
     HeaderComponent,
     AppComponent,

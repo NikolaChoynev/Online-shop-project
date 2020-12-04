@@ -3,7 +3,7 @@ import { IComment } from './comment';
 import { IProduct } from './product';
 
 export interface IUser extends IBase {
-    addresss: string;
+    address: string;
     email: string;
     username: string;
     password: string;

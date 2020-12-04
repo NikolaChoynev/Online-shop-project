@@ -27,8 +27,7 @@ export class AuthGuard implements CanActivateChild {
       }),
       tap((canContinue) => {
         if (canContinue) { return; }
-        const url = this.router.url;
-        this.router.navigateByUrl(url);
+        this.router.navigate(['user/login']);
         return true;
       })
     );

@@ -5,7 +5,8 @@ import { RouterModule } from '@angular/router';
 import { ProductRouterModule } from './product-routin.module';
 import { ProductItemComponent } from './product-item/product-item.component';
 import { DetailComponent } from './detail/detail.component';
-import { UserModule } from '../user/user.module';
+import { FormsModule } from '@angular/forms';
+import { SharedModule } from '../shared/shared.module';
 
 
 
@@ -18,6 +19,8 @@ import { UserModule } from '../user/user.module';
   imports: [
     CommonModule,
     RouterModule,
+    FormsModule,
+    SharedModule,
     ProductRouterModule
   ],
   exports: [

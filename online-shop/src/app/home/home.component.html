@@ -8,32 +8,11 @@
                 <a routerLink="/user/login">Login</a>
             </div>
         </div>
-        <h3 *ngIf="isLogged">Available products</h3>
-        <div *ngIf="isLogged" class="card">
-            <app-product-item></app-product-item>
-        </div>
+        <h3 class="products" *ngIf="isLogged && productList">Available products</h3>
+        <h3 class="products" *ngIf="productList.length === 0">No available products</h3>
+
+        <app-product-item *ngFor="let product of productList" [product]="product"></app-product-item>
+
+        <div *ngIf="!productList">Loading...</div>
     </div>
-    <!-- <div class="rightcolumn">
-        <div class="card">
-            <h2>About Me</h2>
-            <div class="fakeimg" style="height:100px;">Image</div>
-            <p>Some text about me in culpa qui officia deserunt mollit anim..</p>
-        </div>
-        <div class="card">
-            <h3>Popular Post</h3>
-            <div class="fakeimg">
-                <p>Image</p>
-            </div>
-            <div class="fakeimg">
-                <p>Image</p>
-            </div>
-            <div class="fakeimg">
-                <p>Image</p>
-            </div>
-        </div>
-        <div class="card">
-            <h3>Follow Me</h3>
-            <p>Some text..</p>
-        </div>
-    </div> -->
 </div>

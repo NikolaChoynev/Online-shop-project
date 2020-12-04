@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { IUser } from '../shared/interfaces';
+import { ProductService } from '../product/product.service';
+import { IProduct, IUser } from '../shared/interfaces';
 import { UserService } from '../user/user.service';
 
 
@@ -18,9 +19,17 @@ export class HomeComponent implements OnInit {
     return this.userService.currentUser;
   }
 
-  constructor(private userService: UserService) { }
+  productList: IProduct[];
+
+  constructor(
+    private userService: UserService,
+    private productService: ProductService
+    ) { }
 
   ngOnInit(): void {
+    this.productService.loadProductsList().subscribe(productList => {
+      this.productList = productList;
+    });
   }
 
 }

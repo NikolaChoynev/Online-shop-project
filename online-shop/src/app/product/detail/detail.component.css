@@ -3,6 +3,8 @@
     padding: 20px;
     margin-top: 20px;
     margin-right: 0px;
+    text-align: center;
+    width: 100%;
 }
 
 .details button {
@@ -28,7 +30,7 @@ button {
 }
 
 .comment span {
-    margin-left: 90%;
+    margin-left: 80%;
 }
 
 .deletebtn {
@@ -52,4 +54,15 @@ button {
 .postbtn:hover,
 .editbtn:hover {
     opacity: 1;
+}
+
+img {
+    width: 20%;
+}
+
+p.error {
+    text-align: left;
+    border-radius: 0.3em;
+    color: red;
+    padding-top: 0;
 }

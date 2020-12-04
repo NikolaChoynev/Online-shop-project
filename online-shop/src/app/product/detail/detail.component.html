@@ -1,48 +1,55 @@
 <div class="details">
-    <h2>TITLE HEADIND</h2>
-    <h5>Data</h5>
-    <div class="fakeimg" style="height:200px;">Image</div>
-    <p> asdiafisdf sdfisdfjs isd ifsso dfsid sod sjdfsoidf sodjjf oi</p>
-    <button class="likebtn">Buy</button>
-    <button class="editbtn">Edit</button>
-    <button class="deletebtn">Delete</button>
+    <h2>{{product.productName}}</h2>
+    <h5>{{product.created_at}}</h5>
+    <img src={{product.imageUrl}}>
+    <p> {{product.description}}</p>
+    <p> <b>Seller:</b> {{product.ownerId.username}}</p>
+    <p><b>Seller's address:</b> {{product.ownerId.address}}</p>
+    <button *ngIf="!(currentUser._id === product.ownerId._id)" class="likebtn">Buy</button>
+    <button *ngIf="currentUser._id === product.ownerId._id" class="editbtn">Edit</button>
+    <button *ngIf="currentUser._id === product.ownerId._id" class="deletebtn">Delete</button>
 </div>
 <h3>Add a comment</h3>
 
 <div class="comment">
-    <form>
-        <textarea name="postComment" id="comment" cols="197" rows="10"></textarea>
-        <button class="postbtn">Post</button>
+    <form #f="ngForm" (ngSubmit)="commentSubmitHandler(f.value, product._id)">
+        <textarea #addComment="ngModel" name="text" id="text" cols="197" rows="10" ngModel required></textarea>
+        <p *ngIf="addComment.touched && addComment.errors?.required" class="error">You have to add some text to your comment
+        </p>
+        <button [disabled]="f.invalid" class="postbtn">Post</button>
     </form>
 </div>
 
-<h3>Comments</h3>
+<h3 *ngIf="product.comments.length !== 0">Comments</h3>
+<h3 *ngIf="product.comments.length === 0">No comments!</h3>
 
-<div>
-    <div class="comment">
-        <h3>Uthor Name</h3>
-        <p>Comment text</p>
-        <p><span>Chreatet at</span></p>
-        <p><span>10 Likes</span></p>
-        <button class="likebtn">Like</button>
-        <button class="editbtn">Edit</button>
-        <button class="deletebtn">Delete</button>
-    </div>
-    <!-- <div *ngIf="postList.length === 0">No Posts!</div> -->
-</div>
+<div *ngIf="product.comments">
 
-<div>
-    <div class="comment">
-        <h3>Uthor Name</h3>
-        <p>Comment text</p>
-        <p><span>Chreatet at</span></p>
-        <p><span>10 Likes</span></p>
-        <button class="likebtn">Like</button>
-        <button class="editbtn">Edit</button>
-        <button class="deletebtn">Delete</button>
+    <div class="comment" *ngFor="let comment of product.comments">
+        <div *ngIf="!editMode">
+            <h3>{{comment.ownerId.username}}</h3>
+            <p>{{comment.text}}</p>
+            <p><span><b>{{comment.created_at}}</b></span></p>
+            <p><span><b>{{comment.likes.length}}</b> likes</span></p>
+            <button *ngIf="!isLiked" (click)="likeHandler(comment._id, product._id)" class="likebtn">Like</button>
+            <button *ngIf="isLiked" (click)="likeHandler(comment._id, product._id)" class="likebtn">Unlike</button>
+            <button *ngIf="currentUser._id === comment.ownerId._id" (click)="toggleEditMode(comment._id)" class="editbtn">Edit</button>
+            <button *ngIf="currentUser._id === comment.ownerId._id" (click)="deleteComentHandler(comment._id, product._id)" class="deletebtn">Delete</button>
+        </div>
+        <div *ngIf="editMode && currentUser._id === comment.ownerId._id">
+            <div class="comment">
+                <form #f="ngForm" (ngSubmit)="submitEditHandler(f.value, product._id, comment._id)">
+                    <textarea #editComment="ngModel" name="text" id="text" cols="197" rows="10" [ngModel]="comment.text" required></textarea>
+                    <p *ngIf="editComment.touched && editComment.errors?.required" class="error">You have to add some text to your comment
+                    </p>
+                    <button class="likebtn">Save</button>
+                    <button class="editbtn" (click)="toggleEditMode()">Cancel</button>
+                </form>
+            </div>
+        </div>
     </div>
-    <!-- <div *ngIf="postList.length === 0">No Posts!</div> -->
-</div>
-<!-- <div *ngIf="!postList">
+    <div *ngIf="!product.comments">
         Loading...
-      </div> -->
+    </div>
+
+</div>

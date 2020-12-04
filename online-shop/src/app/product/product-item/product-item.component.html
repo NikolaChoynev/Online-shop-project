@@ -1,8 +1,8 @@
-<h2>TITLE HEADING</h2>
-<h5>Title description, Sep 2, 2017</h5>
-<div class="fakeimg" style="height:200px;">Image</div>
-<p>Price</p>
-<p>For more press the detail button</p>
-
-<!-- <button class="deatilbtn" type="button">Details</button> -->
-<a [routerLink]="['/product/detail', 1]" class="deatilbtn">Details</a>
+<div class="card">
+    <h2>{{product.productName}}</h2>
+    <h5>{{product.created_at}}</h5>
+    <img src={{product.imageUrl}}>
+    <p><b>{{product.price}} $</b></p>
+    <p><b>Seller: </b>{{product.ownerId.username}}</p>
+    <a [routerLink]="['/product/detail', product._id]" class="deatilbtn">Details</a>
+</div>

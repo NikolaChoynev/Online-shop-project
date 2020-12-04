@@ -1,26 +1,45 @@
-<form>
+<form #f="ngForm" (ngSubmit)="submitHandler(f.value)">
     <div class="sellForm">
         <h2>Sell your product </h2>
         <hr>
         <div class="selldiv">
-            <label for="name"><b>Product Name</b></label>
-            <input type="text" placeholder="Enter the name of your product" name="name" id="name">
+            <label for="productName"><b>Product Name</b></label>
+            <input #productName="ngModel" [class.input-error]="productName.touched && !!productName.errors" type="text" placeholder="Enter the name of your product" name="productName" id="productName" ngModel required>
+            <p *ngIf="productName.touched && productName.errors?.required" class="error">
+                Name is required!
+            </p>
             <hr>
 
             <label for="description"><b>Description</b></label>
-            <textarea type="text" placeholder="Enter description about your product" name="description" id="description"></textarea>
+            <textarea #description="ngModel" [class.input-error]="description.touched && !!description.errors" type="text" placeholder="Enter description about your product" name="description" id="description" ngModel required minlength="10"></textarea>
+            <p *ngIf="description.touched && description.errors?.required" class="error">
+                Description is required!
+            </p>
+            <p *ngIf="description.touched && description.errors?.minlength" class="error">
+                Description must be at least 10 characters!
+            </p>
             <hr>
 
             <label for="price"><b>Price</b></label>
-            <input type="text" placeholder="Enter the price of your product" name="price" id="price">
+            <input #price="ngModel" [class.input-error]="price.touched && !!price.errors" type="text" placeholder="Enter the price of your product" name="price" id="price" ngModel required>
+            <p *ngIf="price.touched && price.errors?.required" class="error">
+                Price is required!
+            </p>
             <hr>
 
             <label for="image"><b>Image</b></label>
-            <input type="text" placeholder="Post some image of your product" name="imageUrl" id="imageUrl" required>
+            <input #imageUrl="ngModel" [class.input-error]="imageUrl.touched && !!imageUrl.errors" type="text" placeholder="Post some image of your product" name="imageUrl" id="imageUrl" ngModel required appImageValidator>
+            <p *ngIf="imageUrl.touched && imageUrl.errors?.required" class="error">
+                ImageUrl is required!
+            </p>
+            <p *ngIf="imageUrl.touched && imageUrl.errors?.imageValidator" class="error">
+                ImageUrl must start with "http://" or "https://"!
+            </p>
             <hr>
 
-            <button class="sellbtn">Sell</button>
+            <button class="sellbtn" [disabled]="isLoading || f.invalid">Sell</button>
             <button class="cancelbtn" type="button" (click)="cancelHandler()"> Cancel </button>
+            <app-loader [isLoading]="isLoading"></app-loader>
         </div>
 
     </div>

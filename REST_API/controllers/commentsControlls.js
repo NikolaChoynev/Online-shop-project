@@ -32,7 +32,7 @@ function editComment(req, res, next) {
             if (updatedComment) {
                 res.status(200).json(updatedComment);
             } else {
-                res.stats(401).json({ message: 'Now allowed!' });
+                res.status(401).json({ message: 'Now allowed!' });
             }
         })
         .catch(next)
@@ -43,10 +43,10 @@ function deleteComment(req, res, next) {
     const { _id: ownerId } = req.user;
 
     Promise.all([
-        commentModel.findOneAndDelete({ _id: commentId, ownerId }),
-        userModel.findOneAndUpdate({ _id: ownerId }, { $pull: { comments: commentId } }),
-        productModel.findOneAndUpdate({ _id: productId }, { $pull: { comments: commentId } })
-    ])
+            commentModel.findOneAndDelete({ _id: commentId, ownerId }),
+            userModel.findOneAndUpdate({ _id: ownerId }, { $pull: { comments: commentId } }),
+            productModel.findOneAndUpdate({ _id: productId }, { $pull: { comments: commentId } })
+        ])
         .then(([deletedOne, _, __]) => {
             if (deletedOne) {
                 res.status(200).json(deletedOne)
@@ -63,15 +63,15 @@ function like(req, res, next) {
 
     commentModel.findById({ _id: commentId })
         .then(comment => {
-            if(comment.likes.includes(userId)){
-                commentModel.updateOne({ _id: commentId }, {$pull: { likes: userId } }, { new: true })
-                .then(() => res.status(200).json({ message: 'Unliked successful!' }))
-                .catch(next);
-                
+            if (comment.likes.includes(userId)) {
+                commentModel.updateOne({ _id: commentId }, { $pull: { likes: userId } }, { new: true })
+                    .then(() => res.status(200).json({ message: 'Unliked successful!' }))
+                    .catch(next);
+
             } else {
-                commentModel.updateOne({ _id: commentId }, {$push: { likes: userId } }, { new: true })
-                .then(() => res.status(200).json({ message: 'Liked successful!' }))
-                .catch(next);
+                commentModel.updateOne({ _id: commentId }, { $push: { likes: userId } }, { new: true })
+                    .then(() => res.status(200).json({ message: 'Liked successful!' }))
+                    .catch(next);
             }
         })
         .catch(next);

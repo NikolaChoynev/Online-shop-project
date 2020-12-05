@@ -5,9 +5,11 @@
     <p> {{product.description}}</p>
     <p> <b>Seller:</b> {{product.ownerId.username}}</p>
     <p><b>Seller's address:</b> {{product.ownerId.address}}</p>
-    <button *ngIf="!(currentUser._id === product.ownerId._id)" class="likebtn">Buy</button>
-    <button *ngIf="currentUser._id === product.ownerId._id" class="editbtn">Edit</button>
-    <button *ngIf="currentUser._id === product.ownerId._id" class="deletebtn">Delete</button>
+    <p><b>{{product.price}} $</b></p>
+    <p>{{message}}</p>
+    <button *ngIf="!(currentUser._id === product.ownerId._id)" (click)="buyProductHandler(product._id)" class="likebtn">Buy</button>
+    <button *ngIf="currentUser._id === product.ownerId._id" [routerLink]="['/product/edit', product._id]" class="editbtn">Edit</button>
+    <button *ngIf="currentUser._id === product.ownerId._id" type="button" (click)="deleteProductHandler(product._id)" class="deletebtn">Delete</button>
 </div>
 <h3>Add a comment</h3>
 
@@ -31,8 +33,9 @@
             <p>{{comment.text}}</p>
             <p><span><b>{{comment.created_at}}</b></span></p>
             <p><span><b>{{comment.likes.length}}</b> likes</span></p>
-            <button *ngIf="!isLiked" (click)="likeHandler(comment._id, product._id)" class="likebtn">Like</button>
-            <button *ngIf="isLiked" (click)="likeHandler(comment._id, product._id)" class="likebtn">Unlike</button>
+
+            <button *ngIf="!isLiked" (click)="likeHandler(comment._id, product._id)" type="button" class="likebtn">Like</button>
+            <button *ngIf="isLiked" (click)="likeHandler(comment._id, product._id)" type="button" class="likebtn">Unlike</button>
             <button *ngIf="currentUser._id === comment.ownerId._id" (click)="toggleEditMode(comment._id)" class="editbtn">Edit</button>
             <button *ngIf="currentUser._id === comment.ownerId._id" (click)="deleteComentHandler(comment._id, product._id)" class="deletebtn">Delete</button>
         </div>
@@ -43,11 +46,12 @@
                     <p *ngIf="editComment.touched && editComment.errors?.required" class="error">You have to add some text to your comment
                     </p>
                     <button class="likebtn">Save</button>
-                    <button class="editbtn" (click)="toggleEditMode()">Cancel</button>
+                    <button class="editbtn" type="button" (click)="toggleEditMode(comment._id)">Cancel</button>
                 </form>
             </div>
         </div>
     </div>
+
     <div *ngIf="!product.comments">
         Loading...
     </div>

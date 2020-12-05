@@ -23,6 +23,18 @@ export class ProductService {
     return this.http.post<IProduct>(`${apiUrl}/products`, data, { withCredentials: true });
   }
 
+  editProduct(data: { productName: string, description: string, price: number, imageUrl: string }, id: string): Observable<IProduct> {
+    return this.http.put<IProduct>(`${apiUrl}/products/${id}`, data, { withCredentials: true });
+  }
+
+  deleteProduct(id: string): Observable<IProduct> {
+    return this.http.delete<IProduct>(`${apiUrl}/products/${id}`, { withCredentials: true });
+  }
+
+  buyProduct(id: string): Observable<any> {
+    return this.http.post<any>(`${apiUrl}/products/${id}`, {}, { withCredentials: true });
+  }
+
   addComment(data: { text: string }, id: string): Observable<IProduct> {
     return this.http.post<IProduct>(`${apiUrl}/products/comment/${id}`, data, { withCredentials: true });
   }
@@ -36,6 +48,6 @@ export class ProductService {
   }
 
   editComment(data: { text: string }, productId: string, commentId: string): Observable<IComment> {
-    return this.http.put<IComment>(`${apiUrl}/products/${productId}/comment/${commentId}`,  data , { withCredentials: true });
+    return this.http.put<IComment>(`${apiUrl}/products/${productId}/comment/${commentId}`, data, { withCredentials: true });
   }
 }

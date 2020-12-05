@@ -8,6 +8,8 @@ import { ProductModule } from '../product/product.module';
 import { UserService } from './user.service';
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ProductService } from '../product/product.service';
+import { UserCartComponent } from './user-cart/user-cart.component';
 
 
 
@@ -15,7 +17,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   declarations: [
     RegisterComponent,
     LoginComponent,
-    ProfileComponent
+    ProfileComponent,
+    UserCartComponent
   ],
   imports: [
     CommonModule,
@@ -26,7 +29,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ProductModule,
   ],
   providers: [
-    UserService
+    UserService,
+    ProductService
   ]
 })
 export class UserModule { }

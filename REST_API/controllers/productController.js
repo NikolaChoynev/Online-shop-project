@@ -34,7 +34,7 @@ function createProduct(req, res, next) {
     productModel.create({ productName, description, price, imageUrl, ownerId })
         .then(product =>
             userModel.updateOne({ _id: ownerId }, { $addToSet: { products: product._id } })
-                .then(res.status(200).json(product)))
+            .then(res.status(200).json(product)))
         .catch(next)
         .catch(next);
 }
@@ -67,15 +67,15 @@ function buyProduct(req, res, next) {
             const jUserId = bsonToJson(userId)
             if (ownerId === jUserId) {
                 res.status(401).json({ message: 'Not allowed!' })
-            }else if(product.buyers.includes(userId)){
-                res.status(201).json({ message: 'You allredy have it!'})
+            } else if (product.buyers.includes(userId)) {
+                res.status(201).json({ message: 'You allredy bought it!' })
             } else {
                 return Promise.all([
-                    productModel.findOneAndUpdate({ _id: productId }, { $addToSet: { buyers: userId } }, { new: true }),
-                    userModel.findOneAndUpdate({ _id: userId }, { $push: { bought: productId } })
-                ])
-                    .then(([updatedProduct, _]) =>{
-                        res.status(200).json({ message: 'You bought it succsefully! '});
+                        productModel.findOneAndUpdate({ _id: productId }, { $addToSet: { buyers: userId } }, { new: true }),
+                        userModel.findOneAndUpdate({ _id: userId }, { $push: { bought: productId } })
+                    ])
+                    .then(([updatedProduct, _]) => {
+                        res.status(200).json({ message: 'You bought it succsefully! ' });
                     })
                     .catch(next);
             }

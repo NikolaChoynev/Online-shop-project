@@ -17,6 +17,10 @@ export class DetailComponent implements OnInit {
 
   editMode = false;
 
+  message = '';
+
+  messageComment = '';
+
   get currentUser(): IUser {
     return this.userService.currentUser;
   }
@@ -44,6 +48,7 @@ export class DetailComponent implements OnInit {
         });
       },
       error: (err) => {
+        console.error(err);
       }
     });
   }
@@ -56,18 +61,20 @@ export class DetailComponent implements OnInit {
         });
       },
       error: (err) => {
+        console.error(err);
       }
     });
   }
 
-  likeHandler(commentId: string, productId: string): void {
-    this.productService.likeComment(commentId).subscribe({
-      next: () => {
-        this.isLiked = !this.isLiked;
-        this.productService.loadProduct(productId).subscribe(product => {
-          this.product = product;
-        });
-      }
+  likeHandler(commentId: any, productId: string): void {
+    this.productService.likeComment(commentId).subscribe(message => {
+      this.messageComment = message.message;
+      setTimeout(() => {
+        this.messageComment = '';
+      }, 3000);
+      this.productService.loadProduct(productId).subscribe(product => {
+        this.product = product;
+      });
     });
   }
 
@@ -85,7 +92,31 @@ export class DetailComponent implements OnInit {
         this.productService.loadProduct(productId).subscribe(product => {
           this.product = product;
         });
+      },
+      error: (err) => {
+        console.error(err);
       }
     });
   }
+
+  deleteProductHandler(id: string): void {
+    this.productService.deleteProduct(id).subscribe({
+      next: () => {
+        this.router.navigate(['/']);
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
+  }
+
+  buyProductHandler(id: string): void {
+    this.productService.buyProduct(id).subscribe(message => {
+      this.message = message.message;
+      setTimeout(() => {
+        this.message = '';
+      }, 3000);
+    });
+  }
+
 }

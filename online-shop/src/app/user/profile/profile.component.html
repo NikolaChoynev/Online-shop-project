@@ -10,20 +10,16 @@
         </div>
     </div>
     <div class="rightcolumn">
-        <h3>About Gosho </h3>
-        <div class="card">
-            <h2>Gosho's Cart</h2>
-            <div style="height:100px;">
-                <p>Name of the product</p>
-                <p>price</p>
-                <a [routerLink]="['/product/detail', 1]">Details</a>
+        <h3>About {{currentUser.username}} </h3>
+        <div class="card" *ngIf="currentUser.bought">
+            <h2>{{currentUser.username}}'s Cart</h2>
+            <div>
+                <app-user-cart *ngFor="let boughtProduct of currentUser.bought" [boughtProduct]="boughtProduct"></app-user-cart>
             </div>
-            <div style="height:100px;">
-                <p>Name of the product</p>
-                <p>price</p>
-                <a [routerLink]="['/product/detail', 1]">Details</a>
+            <div *ngIf="currentUser.bought.length === 0">
+                <p>Your cart is empty!</p>
             </div>
-            <p>Debt price: </p>
+            <p>Debt price: <b>{{debtPrice}}$</b> </p>
         </div>
         <div class="card-form">
             <h3>Profile</h3>

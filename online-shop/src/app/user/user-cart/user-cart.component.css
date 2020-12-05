@@ -1,0 +1,17 @@
+a {
+    background-color: #333;
+    color: white;
+    /* padding: 20px 50px; */
+    /* margin-left: 70%; */
+    opacity: 0.8;
+    border: 2px solid;
+    border-radius: 5px;
+    font-size: 100%;
+    text-decoration: none;
+    padding: 5px 5px;
+    /* width: 20%; */
+}
+
+a:hover {
+    opacity: 1;
+}

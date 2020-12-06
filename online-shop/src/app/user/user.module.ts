@@ -10,6 +10,7 @@ import { SharedModule } from '../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProductService } from '../product/product.service';
 import { UserCartComponent } from './user-cart/user-cart.component';
+import { UserSellesComponent } from './user-selles/user-selles.component';
 
 
 
@@ -18,7 +19,8 @@ import { UserCartComponent } from './user-cart/user-cart.component';
     RegisterComponent,
     LoginComponent,
     ProfileComponent,
-    UserCartComponent
+    UserCartComponent,
+    UserSellesComponent
   ],
   imports: [
     CommonModule,

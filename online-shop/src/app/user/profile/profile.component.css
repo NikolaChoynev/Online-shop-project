@@ -41,14 +41,19 @@
     margin: 0 auto;
 }
 
-
-/* .editProfile label, */
+input:not(.input-error) {
+    border: 2px solid black;
+}
 
 .editProfile input {
     width: 250px;
     margin: 5px 0px;
-    border: 2px solid black;
+    /* border: 2px solid black; */
     border-radius: 5px;
+}
+
+.input-error {
+    border: 2px solid red;
 }
 
 .profile {
@@ -106,4 +111,15 @@ a {
 
 a:hover {
     opacity: 1;
+}
+
+h3 {
+    text-align: center;
+}
+
+p.error {
+    text-align: left;
+    border-radius: 0.3em;
+    color: red;
+    padding-top: 0;
 }

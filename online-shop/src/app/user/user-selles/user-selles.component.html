@@ -1,0 +1,7 @@
+<div class="card">
+    <h2>{{product.productName}}</h2>
+    <h5>{{product.created_at}}</h5>
+    <img src={{product.imageUrl}}>
+    <p><b>{{product.price}}$</b></p>
+    <a [routerLink]="['/product/detail', product._id]">Details</a>
+</div>

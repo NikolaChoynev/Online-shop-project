@@ -6,6 +6,7 @@ const {
 const utils = require('../utils');
 const { authCookieName } = require('../app-config');
 
+
 const bsonToJson = (data) => { return JSON.parse(JSON.stringify(data)) };
 const removePassword = (data) => {
     const { password, __v, ...userData } = data;
@@ -89,7 +90,9 @@ function getProfileInfo(req, res, next) {
         .populate('products')
         .populate('bought')
         .exec()
-        .then(user => { res.status(200).json(user) })
+        .then(user => {
+            res.status(200).json(user)
+        })
         .catch(next);
 }
 
@@ -99,7 +102,18 @@ function editProfileInfo(req, res, next) {
 
     userModel.findOneAndUpdate({ _id: userId }, { address, username, email }, { runValidators: true, new: true })
         .then(user => { res.status(200).json(user) })
-        .catch(next);
+        .catch(err => {
+            if (err.name === 'MongoError' && err.code === 11000) {
+                let field = err.message.split("index: ")[1];
+                field = field.split(" dup key")[0];
+                field = field.substring(0, field.lastIndexOf("_"));
+
+                res.status(409)
+                    .send({ message: `This ${field} is already registered!` });
+                return;
+            }
+            next(err);
+        });
 }
 
 module.exports = {

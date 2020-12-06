@@ -8,8 +8,8 @@
                 <a routerLink="/user/login">Login</a>
             </div>
         </div>
-        <h3 class="products" *ngIf="isLogged && !productList">Available products</h3>
-        <h3 class="products" *ngIf="productList.length === 0">No available products</h3>
+        <h3 class="products" *ngIf="isLogged && productList.length > 0">Available products</h3>
+        <h3 class="products" *ngIf="isLogged && productList.length === 0">No available products</h3>
 
         <app-product-item *ngFor="let product of productList" [product]="product"></app-product-item>
 

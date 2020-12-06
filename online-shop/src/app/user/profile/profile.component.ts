@@ -1,4 +1,5 @@
 import { OnChanges, Component, OnInit, Input } from '@angular/core';
+import { tap } from 'rxjs/operators';
 import { ProductService } from 'src/app/product/product.service';
 import { IProduct, IUser } from 'src/app/shared/interfaces';
 import { UserService } from '../user.service';
@@ -12,44 +13,56 @@ export class ProfileComponent implements OnInit, OnChanges {
 
   inEditMode = false;
 
+  errorMessage = '';
+
+  isLoading = false;
+
+
   get currentUser(): IUser {
     return this.userService.currentUser;
   }
-  @Input()
 
-  debtPrice = 0;
+  get boughtProducts(): IProduct[] {
+    return this.userService.boughtProducts;
+  }
 
-  boughtProducts = this.currentUser.bought;
-
-  productList: IProduct[];
-
-
+  get debtPrice(): number {
+    return this.userService.debtPrice;
+  }
   constructor(
     private userService: UserService,
     private productService: ProductService
   ) {
-   }
+  }
 
-   ngOnChanges(): void {
+  ngOnChanges(): void {
 
-   }
+  }
 
   ngOnInit(): void {
     this.userService.getCurrentUserProfile().subscribe();
-    this.productService.loadProductsList().subscribe(productList => {
-      for (let i = 0; i < this.boughtProducts.length; i++) {
-        if (!productList.includes(this.boughtProducts[i])) {
-          this.boughtProducts.splice(i, 1);
-        }
-      }
-    });
-    this.boughtProducts.forEach(product => {
-      this.debtPrice += product.price;
-    });
   }
 
   toggleEditMode(): void {
     this.inEditMode = !this.inEditMode;
+  }
+
+  submitHandler(data: { email: string, username: string, address: string }): void {
+    this.isLoading = true;
+    this.userService.editProfile(data).subscribe({
+      next: () => {
+        this.inEditMode = false;
+        this.isLoading = false;
+        this.userService.getCurrentUserProfile().subscribe();
+      },
+      error: (err) => {
+        this.isLoading = false;
+        this.errorMessage = err.error.message;
+        setTimeout(() => {
+          this.errorMessage = '';
+        }, 3000);
+      }
+    });
   }
 
 }

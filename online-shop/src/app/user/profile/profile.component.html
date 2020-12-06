@@ -1,12 +1,9 @@
 <div class="row">
     <div class="leftcolumn">
-        <h3>Your Salles</h3>
-        <div class="card">
-            <h2>TITLE HEADING</h2>
-            <h5>Title description, Sep 2, 2017</h5>
-            <div class="fakeimg" style="height:200px;">Image</div>
-            <p>Price</p>
-            <a [routerLink]="['/product/detail', 1]">Details</a>
+        <h3 *ngIf="currentUser.products.length > 0">Your Sales</h3>
+        <h3 *ngIf="currentUser.products.length === 0">You have no sales</h3>
+        <div *ngIf="currentUser.products">
+            <app-user-selles *ngFor="let product of currentUser.products" [product]="product"></app-user-selles>
         </div>
     </div>
     <div class="rightcolumn">
@@ -14,42 +11,61 @@
         <div class="card" *ngIf="currentUser.bought">
             <h2>{{currentUser.username}}'s Cart</h2>
             <div>
-                <app-user-cart *ngFor="let boughtProduct of currentUser.bought" [boughtProduct]="boughtProduct"></app-user-cart>
+                <app-user-cart *ngFor="let boughtProduct of currentUser.bought" [boughtProduct]="boughtProduct">
+                </app-user-cart>
             </div>
             <div *ngIf="currentUser.bought.length === 0">
                 <p>Your cart is empty!</p>
             </div>
-            <p>Debt price: <b>{{debtPrice}}$</b> </p>
+            <p>Total price: <b>{{debtPrice}}$</b> </p>
         </div>
         <div class="card-form">
             <h3>Profile</h3>
-            <form>
+            <form #f="ngForm" (ngSubmit)="submitHandler(f.value)">
                 <div *ngIf="inEditMode" class="editProfile">
                     <label for="email"><b>Email</b></label>
-                    <input type="text" placeholder="Enter your email" name="email" id="email">
+                    <input #userEmail="ngModel" [class.input-error]="userEmail.touched && !!userEmail.errors ||errorMessage " type="text" placeholder="Enter your email" name="email" id="email" [ngModel]="currentUser.email" required email>
+                    <p *ngIf="userEmail.touched && userEmail.errors?.required" class="error">
+                        Email is required!
+                    </p>
+                    <p *ngIf="userEmail.touched && userEmail.errors?.email" class="error">
+                        Email is not valid!
+                    </p>
 
                     <label for="username"><b>Username</b></label>
-                    <input type="text" placeholder="Enter your username" name="username" id="username">
+                    <input #userUsername="ngModel" [class.input-error]="userUsername.touched && !!userUsername.errors" type="text" placeholder="Enter your username" name="username" id="username" [ngModel]="currentUser.username" required minlength="3">
+                    <p *ngIf="userUsername.touched && userUsername.errors?.required" class="error">
+                        Username is required!
+                    </p>
+                    <p *ngIf="userUsername.touched && userUsername.errors?.minlength" class="error">
+                        Username must be at least 3 characters!
+                    </p>
 
                     <label for="address"><b>Address</b></label>
-                    <input type="text" placeholder="Enter your address" name="email" id="email">
+                    <input #userAddress="ngModel" [class.input-error]="userAddress.touched && !!userAddress.errors" type="text" placeholder="Enter your address" name="address" id="address" [ngModel]="currentUser.address" required>
+                    <p *ngIf="userAddress.touched && userAddress.errors?.required" class="error">
+                        Address is required!
+                    </p>
 
-                    <button class="savebtn">Save</button>
-                    <button class="cancelbtn" (click)="toggleEditMode()">Cancel</button>
+                    <button class="savebtn" [disabled]="isLoading || f.invalid || errorMessage">Save</button>
+                    <button class="cancelbtn" type="button" (click)="toggleEditMode()">Cancel</button>
+                    <p *ngIf="errorMessage" class="error">{{errorMessage}}</p>
+                    <app-loader [isLoading]="isLoading"></app-loader>
 
 
                 </div>
+
             </form>
             <div *ngIf="!inEditMode" class="profile">
                 <p><b>Email:</b></p>
-                <p>gosho@gmail.com</p>
+                <p>{{currentUser.email}}</p>
 
                 <p><b>Username:</b></p>
-                <p>Gosho</p>
+                <p>{{currentUser.username}}</p>
 
                 <p><b>Address:</b></p>
-                <p>Plovdiv</p>
-                <button class="editbtn" (click)="toggleEditMode()">Edit</button>
+                <p>{{currentUser.address}}</p>
+                <button type="button" class="editbtn" (click)="toggleEditMode()">Edit</button>
             </div>
         </div>
     </div>

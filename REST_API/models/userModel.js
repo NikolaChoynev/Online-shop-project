@@ -5,8 +5,8 @@ const saltRounds = Number(process.env.SALTROUTNDS) || 5;
 const { ObjectId } = mongoose.Schema.Types;
 
 const userSchema = new mongoose.Schema({
-    address:{
-       type: String
+    address: {
+        type: String
     },
     email: {
         type: String,
@@ -16,10 +16,9 @@ const userSchema = new mongoose.Schema({
     username: {
         type: String,
         required: true,
-        unique: true,
         minlength: [3, 'Username should be at least 3 characters'],
         validate: {
-            validator: function (v) {
+            validator: function(v) {
                 return /[a-zA-Z0-9]+/g.test(v);
             },
             message: props => `${props.value} must contains only latin letters and digits!`
@@ -30,7 +29,7 @@ const userSchema = new mongoose.Schema({
         required: true,
         minlength: [5, 'Password should be at least 5 chatacters'],
         validate: {
-            validator: function (v) {
+            validator: function(v) {
                 return /[a-zA-Z0-9]+/g.test(v);
             },
             message: props => `${props.value} must contains only latin letters and digits!`
@@ -41,8 +40,8 @@ const userSchema = new mongoose.Schema({
         ref: 'product'
     }],
     bought: [{
-       type: ObjectId,
-       ref: 'product'
+        type: ObjectId,
+        ref: 'product'
     }],
     comments: [{
         type: ObjectId,
@@ -51,19 +50,19 @@ const userSchema = new mongoose.Schema({
 }, { timestamps: { createdAt: 'created_at' } });
 
 userSchema.methods = {
-    matchPassword: function (password) {
+    matchPassword: function(password) {
         return bcrypt.compare(password, this.password);
     }
 }
 
-userSchema.pre('save', function (next) {
+userSchema.pre('save', function(next) {
     if (this.isModified('password')) {
         bcrypt.genSalt(saltRounds, (err, salt) => {
             if (err) {
                 next(err);
             }
             bcrypt.hash(this.password, salt, (err, hash) => {
-                if(err) {
+                if (err) {
                     next(err);
                 }
                 this.password = hash;

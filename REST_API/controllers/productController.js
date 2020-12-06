@@ -1,5 +1,6 @@
 const { productModel, userModel } = require('../models');
 const { bsonToJson } = require('../controllers/auth');
+const { findOneAndUpdate } = require('../models/userModel');
 
 
 
@@ -51,10 +52,28 @@ function editProduct(req, res, next) {
 
 function deleteProdict(req, res, next) {
     const { productId } = req.params;
+    const { _id: ownerId } = req.user;
 
-    productModel.findOneAndDelete({ _id: productId })
-        .then(deletedProduct => res.status(200).json(deletedProduct))
+    Promise.all([
+            productModel.findOneAndDelete({ _id: productId }),
+            userModel.findOneAndUpdate({ _id: ownerId }, { $pull: { products: productId } }),
+            userModel.find({})
+        ])
+        .then(([deletedOne, _, users]) => {
+            if (deletedOne) {
+                res.status(200).json(deletedOne)
+            } else {
+                res.status(401).json({ message: 'Not allowed!' });
+            }
+            users.forEach(user => {
+                id = user._id;
+                userModel.findOneAndUpdate({ _id: id }, { $pull: { bought: productId } })
+                    .then()
+                    .catch()
+            });
+        })
         .catch(next);
+
 }
 
 function buyProduct(req, res, next) {

@@ -10,9 +10,9 @@
         </div>
         <h3 class="products" *ngIf="isLogged && productList.length > 0">Available products</h3>
         <h3 class="products" *ngIf="isLogged && productList.length === 0">No available products</h3>
-
-        <app-product-item *ngFor="let product of productList" [product]="product"></app-product-item>
-
+        <div *ngIf="isLogged">
+            <app-product-item *ngFor="let product of productList" [product]="product"></app-product-item>
+        </div>
         <div *ngIf="!productList">Loading...</div>
     </div>
 </div>

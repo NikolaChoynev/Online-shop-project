@@ -22,7 +22,7 @@ export class UserService {
   ) { }
 
   getCurrentUserProfile(): Observable<IUser> {
-    return this.http.get(`${apiUrl}/users/profile`, { withCredentials: true }).pipe(
+    return this.http.get(`/users/profile`).pipe(
       tap(((user: IUser) => {
         this.currentUser = user;
         this.boughtProducts = user.bought;
@@ -36,25 +36,25 @@ export class UserService {
   }
 
   login(data: { email: string, password: string }): Observable<IUser> {
-    return this.http.post(`${apiUrl}/users/login`, data, { withCredentials: true }).pipe(
+    return this.http.post(`/users/login`, data).pipe(
       tap((user: IUser) => this.currentUser = user)
     );
   }
 
   logout(): Observable<IUser> {
-    return this.http.post(`${apiUrl}/users/logout`, {}, { withCredentials: true }).pipe(
+    return this.http.post(`/users/logout`, {}).pipe(
       tap((user: IUser) => this.currentUser = null)
     );
   }
 
   register(data: { email: string, address: string, username: string, password: string }): Observable<IUser> {
-    return this.http.post<IUser>(`${apiUrl}/users/register`, data, { withCredentials: true }).pipe(
+    return this.http.post<IUser>(`/users/register`, data).pipe(
       tap((user: IUser) => this.currentUser = user)
     );
   }
 
   editProfile(data: { email: string, username: string, address: string }): Observable<IUser> {
-    return this.http.put<IUser>(`${apiUrl}/users/profile`, data, { withCredentials: true }).pipe(
+    return this.http.put<IUser>(`/users/profile`, data).pipe(
       tap((user: IUser) => this.currentUser = user)
     );
   }

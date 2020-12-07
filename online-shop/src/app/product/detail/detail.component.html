@@ -1,6 +1,6 @@
 <div class="details">
     <h2>{{product.productName}}</h2>
-    <h5>{{product.created_at}}</h5>
+    <h5>{{product.created_at | timeDiff}}</h5>
     <img src={{product.imageUrl}}>
     <p> {{product.description}}</p>
     <p> <b>Seller:</b> {{product.ownerId.username}}</p>
@@ -31,7 +31,7 @@
         <div *ngIf="!editMode">
             <h3>{{comment.ownerId.username}}</h3>
             <p>{{comment.text}}</p>
-            <p><span><b>{{comment.created_at}}</b></span></p>
+            <p><span><b>{{comment.created_at | timeDiff}}</b></span></p>
             <p><span><b>{{comment.likes.length}}</b> likes</span></p>
 
             <button *ngIf="!isLiked" (click)="likeHandler(comment._id, product._id)" type="button" class="likebtn">Like</button>

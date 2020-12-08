@@ -17,9 +17,7 @@
 .card {
     background-color: white;
     padding: 20px;
-    margin-top: 20px;
-    margin-right: 22px;
-    margin-left: 40%;
+    margin: 20px auto;
     width: 60%;
     text-align: center;
 }

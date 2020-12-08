@@ -20,15 +20,35 @@ export class HomeComponent implements OnInit {
   }
 
   productList: IProduct[];
+  filteredProducts: IProduct[];
+  // tslint:disable-next-line: variable-name
+  private _searchTerm: string;
+  get searchTerm(): string {
+    return this._searchTerm;
+  }
+
+  set searchTerm(value: string) {
+    this._searchTerm = value;
+    this.filteredProducts = this.filtereProducts(value);
+  }
+
+  filtereProducts(searchString: string): IProduct[] {
+    return this.productList.filter(product =>
+      product.productName.toLowerCase().indexOf(searchString.toLowerCase()) !== -1);
+  }
 
   constructor(
     private userService: UserService,
     private productService: ProductService
-    ) { }
+  ) {
+
+  }
 
   ngOnInit(): void {
     this.productService.loadProductsList().subscribe(productList => {
       this.productList = productList;
+      this.filteredProducts = productList;
+
     });
   }
 

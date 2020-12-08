@@ -12,6 +12,7 @@ import { HomeComponent } from './home/home.component';
 import { UserModule } from './user/user.module';
 import { ProductModule } from './product/product.module';
 import { ProductService } from './product/product.service';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { ProductService } from './product/product.service';
   imports: [
     HttpClientModule,
     BrowserModule,
+    FormsModule,
     AppRoutingModule,
     CoreModule,
     UserModule,

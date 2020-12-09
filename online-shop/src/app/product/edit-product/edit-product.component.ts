@@ -10,7 +10,9 @@ import { ProductService } from '../product.service';
 })
 export class EditProductComponent implements OnInit {
 
-  product: IProduct = null;
+  get product(): IProduct {
+    return this.productService.currentProduct;
+  }
 
   isLoading = false;
 
@@ -20,9 +22,7 @@ export class EditProductComponent implements OnInit {
     activatedRoute: ActivatedRoute,
   ) {
     const id = activatedRoute.snapshot.params.id;
-    productService.loadProduct(id).subscribe(product => {
-      this.product = product;
-    });
+    productService.loadProduct(id).subscribe();
   }
 
   ngOnInit(): void {

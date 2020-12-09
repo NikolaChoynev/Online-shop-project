@@ -15,7 +15,7 @@
 
 <div class="comment">
     <form #f="ngForm" (ngSubmit)="commentSubmitHandler(f.value, product._id)">
-        <textarea #addComment="ngModel" name="text" id="text" cols="197" rows="10" ngModel required></textarea>
+        <textarea #addComment="ngModel" name="text" id="textComment" cols="197" rows="10" ngModel required></textarea>
         <p *ngIf="addComment.touched && addComment.errors?.required" class="error">You have to add some text to your comment
         </p>
         <button [disabled]="f.invalid" class="postbtn">Post</button>
@@ -33,13 +33,14 @@
             <p>{{comment.text}}</p>
             <p><span><b>{{comment.created_at | timeDiff}}</b></span></p>
             <p><span><b>{{comment.likes.length}}</b> likes</span></p>
+            <p *ngIf="commentId === comment._id">{{messageComment}}</p>
 
             <button *ngIf="!isLiked" (click)="likeHandler(comment._id, product._id)" type="button" class="likebtn">Like</button>
             <button *ngIf="isLiked" (click)="likeHandler(comment._id, product._id)" type="button" class="likebtn">Unlike</button>
             <button *ngIf="currentUser._id === comment.ownerId._id" (click)="toggleEditMode(comment._id)" class="editbtn">Edit</button>
             <button *ngIf="currentUser._id === comment.ownerId._id" (click)="deleteComentHandler(comment._id, product._id)" class="deletebtn">Delete</button>
         </div>
-        <div *ngIf="editMode && currentUser._id === comment.ownerId._id">
+        <div *ngIf="editMode && commentId === comment._id ">
             <div class="comment">
                 <form #f="ngForm" (ngSubmit)="submitEditHandler(f.value, product._id, comment._id)">
                     <textarea #editComment="ngModel" name="text" id="text" cols="197" rows="10" [ngModel]="comment.text" required></textarea>

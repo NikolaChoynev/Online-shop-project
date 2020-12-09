@@ -31,7 +31,6 @@ export class ProfileComponent implements OnInit, OnChanges {
   }
   constructor(
     private userService: UserService,
-    private productService: ProductService
   ) {
   }
 

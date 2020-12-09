@@ -25,8 +25,7 @@
     width: 100%;
 }
 
-
-/* a {
+a {
     float: left;
     display: block;
     color: black;
@@ -39,7 +38,7 @@
 a:hover {
     background-color: #333;
     color: white;
-} */
+}
 
 
 /* .leftcolumn {

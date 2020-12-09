@@ -11,7 +11,9 @@ import { ProductService } from '../product.service';
 })
 export class DetailComponent implements OnInit {
 
-  product: IProduct = null;
+  get product(): IProduct {
+    return this.productService.currentProduct;
+  }
 
   isLiked = false;
 
@@ -21,31 +23,29 @@ export class DetailComponent implements OnInit {
 
   messageComment = '';
 
+  commentId = '';
+
   get currentUser(): IUser {
     return this.userService.currentUser;
   }
 
   constructor(
     private productService: ProductService,
-    activatedRoute: ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
     private userService: UserService,
     private router: Router
   ) {
-    const id = activatedRoute.snapshot.params.id;
-    productService.loadProduct(id).subscribe(product => {
-      this.product = product;
-    });
   }
 
   ngOnInit(): void {
+    const id = this.activatedRoute.snapshot.params.id;
+    this.productService.loadProduct(id).subscribe();
   }
 
   commentSubmitHandler(formValue: { text: string }, id: string): void {
     this.productService.addComment(formValue, id).subscribe({
       next: () => {
-        this.productService.loadProduct(id).subscribe(product => {
-          this.product = product;
-        });
+        this.productService.loadProduct(id).subscribe();
       },
       error: (err) => {
         console.error(err);
@@ -56,9 +56,7 @@ export class DetailComponent implements OnInit {
   deleteComentHandler(commentId: string, productId: string): void {
     this.productService.deleteComment(commentId, productId).subscribe({
       next: () => {
-        this.productService.loadProduct(productId).subscribe(product => {
-          this.product = product;
-        });
+        this.productService.loadProduct(productId).subscribe();
       },
       error: (err) => {
         console.error(err);
@@ -69,29 +67,24 @@ export class DetailComponent implements OnInit {
   likeHandler(commentId: any, productId: string): void {
     this.productService.likeComment(commentId).subscribe(message => {
       this.messageComment = message.message;
+      this.commentId = commentId;
       setTimeout(() => {
         this.messageComment = '';
       }, 3000);
-      this.productService.loadProduct(productId).subscribe(product => {
-        this.product = product;
-      });
+      this.productService.loadProduct(productId).subscribe();
     });
   }
 
   toggleEditMode(id): void {
-    if (this.currentUser.comments.includes(id)) {
-      this.editMode = !this.editMode;
-    }
-
+    this.commentId = id;
+    this.editMode = !this.editMode;
   }
 
   submitEditHandler(formValue: { text: string }, productId: string, commentId: string): void {
     this.productService.editComment(formValue, productId, commentId).subscribe({
       next: () => {
         this.editMode = !this.editMode;
-        this.productService.loadProduct(productId).subscribe(product => {
-          this.product = product;
-        });
+        this.productService.loadProduct(productId).subscribe();
       },
       error: (err) => {
         console.error(err);

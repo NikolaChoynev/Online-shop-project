@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { IComment, IProduct } from '../shared/interfaces';
 
@@ -9,6 +10,8 @@ const apiUrl = environment.apiUrl;
 @Injectable()
 export class ProductService {
 
+  currentProduct: IProduct;
+
   constructor(private http: HttpClient) { }
 
   loadProductsList(): Observable<IProduct[]> {
@@ -16,15 +19,21 @@ export class ProductService {
   }
 
   loadProduct(id: string): Observable<IProduct> {
-    return this.http.get<IProduct>(`/products/${id}`);
+    return this.http.get<IProduct>(`/products/${id}`).pipe(
+      tap((product: IProduct) => this.currentProduct = product)
+    );
   }
 
   saveProduct(data: { productName: string, description: string, price: number, imageUrl: string }): Observable<IProduct> {
-    return this.http.post<IProduct>(`/products`, data);
+    return this.http.post<IProduct>(`/products`, data).pipe(
+      tap((product: IProduct) => this.currentProduct = product)
+    );
   }
 
   editProduct(data: { productName: string, description: string, price: number, imageUrl: string }, id: string): Observable<IProduct> {
-    return this.http.put<IProduct>(`/products/${id}`, data);
+    return this.http.put<IProduct>(`/products/${id}`, data).pipe(
+      tap((product: IProduct) => this.currentProduct = product)
+    );
   }
 
   deleteProduct(id: string): Observable<IProduct> {
@@ -36,7 +45,9 @@ export class ProductService {
   }
 
   addComment(data: { text: string }, id: string): Observable<IProduct> {
-    return this.http.post<IProduct>(`/products/comment/${id}`, data);
+    return this.http.post<IProduct>(`/products/comment/${id}`, data).pipe(
+      tap((product: IProduct) => this.currentProduct = product)
+    );
   }
 
   deleteComment(commentId: string, productId: string): Observable<IComment> {
